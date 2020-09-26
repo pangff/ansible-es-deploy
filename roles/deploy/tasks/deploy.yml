@@ -1,0 +1,9 @@
+- name: "Generate env config file"
+  template:
+    src: ".env.j2"
+    dest: "{{elk_project_home}}/.env"
+    
+- name: "start container"
+  command: docker-compose up -d
+  args:
+    chdir: '{{elk_project_home}}'

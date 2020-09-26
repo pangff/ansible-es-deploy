@@ -1,0 +1,12 @@
+- name: "install sshuttle env"
+  become: yes
+  apt:
+    name: sshuttle
+    state: present
+
+- name: "over ssh"
+  command: "sshuttle -vvvv --dns -r {{over_ssh_user}}@{{over_ssh_host}} 0/0 -x {{over_ssh_host}}"
+  register: ps
+
+
+- debug: var=ps.stdout_lines

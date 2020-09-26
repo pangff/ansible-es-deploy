@@ -1,0 +1,7 @@
+---
+- name: install docker env
+  gather_facts: true
+  hosts: "{{host}}"
+  remote_user: gmym
+  roles:
+    - overssh

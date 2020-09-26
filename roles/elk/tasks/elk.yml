@@ -1,0 +1,47 @@
+- name: Install git
+  become: yes
+  apt:
+    name: git
+    state: present
+    update_cache: yes
+
+- name: Ensure  dir exist
+  file:
+    path: "{{elk_project_home}}"
+    state: directory
+    follow: yes
+
+- name: "Git checkout"
+  git:
+    repo: '{{repo}}'
+    dest: '{{elk_project_home}}'
+    version: master
+
+
+- name: "Give init_common permission"
+  file:
+    path: "{{elk_project_home}}/init_common.sh"
+    owner: '{{ansible_ssh_user}}'
+    group: '{{ansible_ssh_user}}'
+    mode: '1777'
+
+- name: "Give init_user permission"
+  file:
+    path: "{{elk_project_home}}/init_user.sh"
+    owner: '{{ansible_ssh_user}}'
+    group: '{{ansible_ssh_user}}'
+    mode: '1777'
+
+- name: "install docker env"
+  shell: "{{elk_project_home}}/init_common.sh"
+  register: ps
+  become: yes
+
+- debug: var=ps.stdout_lines
+
+- name: "add docker group"
+  shell: "{{elk_project_home}}/init_user.sh"
+  register: ps2
+  become: yes
+
+- debug: var=ps2.stdout_lines 
