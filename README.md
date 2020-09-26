@@ -44,7 +44,7 @@ shell/overssh.sh
 完成docker环境搭建并下载启动容器
 
 ```
-shell/overssh.sh 
+shell/deploy.sh 
 ```
 
 #### 访问
